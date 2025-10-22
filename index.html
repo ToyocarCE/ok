@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toyocar Auto Center - Especializada Toyota Fortaleza</title>
+    <!-- Carrega o Tailwind CSS para o estilo moderno e responsivo --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuração do Tailwind para fonte Inter e esquema de cores automotivas modernas (VERMELHO/VERMELHO PROFUNDO) --><script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark': '#0f0f12', // Fundo bem escuro
+                        'accent-red': '#ff4b4b', // Vermelho Fogo (Mais claro)
+                        'accent-dark-red': '#cc0000', // Vermelho Mais Profundo
+                        'accent-gold': '#FFC107', // Amarelo/Dourado do Google Ratings
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* -------------------------------------- */
+        /* EFEITOS DE GLOW E ANIMAÇÃO - O SEGREDO DO DESIGN */
+        /* -------------------------------------- */
+        
+        /* Animação de pulsação sutil para o fundo, imitando um "brilho" VERMELHO */
+        @keyframes subtle-glow {
+            0% { box-shadow: 0 0 150px 10px rgba(255, 75, 75, 0.05) inset; } /* Red glow (accent-red) */
+            50% { box-shadow: 0 0 150px 10px rgba(204, 0, 0, 0.1) inset; } /* Dark Red glow (accent-dark-red) */
+            100% { box-shadow: 0 0 150px 10px rgba(255, 75, 75, 0.05) inset; }
+        }
+
+        /* Estilo para o corpo da página, fonte e aplicação do glow de fundo */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
+            position: relative;
+            /* Aplica a animação no fundo */
+            animation: subtle-glow 20s infinite alternate; 
+        }
+        
+        /* Classe customizada para o degradê vibrante no botão CTA: Vermelho -> Vermelho Profundo */
+        .gradient-button {
+            background: linear-gradient(90deg, #ff4b4b 0%, #cc0000 100%);
+            transition: all 0.3s ease;
+            /* Sombra inicial para dar profundidade */
+            box-shadow: 0 4px 15px rgba(255, 75, 75, 0.3);
+        }
+        .gradient-button:hover {
+            /* Sombra MUITO mais forte para o efeito de "brilho" intenso */
+            box-shadow: 0 0 40px rgba(255, 75, 75, 0.8), 0 0 20px rgba(204, 0, 0, 0.6);
+            transform: scale(1.05);
+        }
+        
+        /* Estilo para os cards de serviço com efeito de borda brilhante aprimorado */
+        .service-card {
+            background-color: #1a1a20;
+            border-bottom: 4px solid transparent;
+            /* Borda em degradê VERMELHO -> VERMELHO PROFUNDO */
+            border-image: linear-gradient(to right, #ff4b4b, #cc0000);
+            border-image-slice: 1;
+            transition: all 0.3s ease;
+            border-radius: 0.75rem; /* rounded-xl */
+        }
+        .service-card:hover {
+            /* Sombra VERMELHA mais intensa no hover */
+            box-shadow: 0 15px 40px rgba(255, 75, 75, 0.3); 
+            transform: translateY(-8px); /* Salto mais dramático no hover */
+        }
+        
+        /* -------------------------------------- */
+        /* ESTILOS DO CARROSSEL DE IMAGENS */
+        /* -------------------------------------- */
+        .carousel-image, .room-image {
+            opacity: 0;
+            transition: opacity 1s ease-in-out; /* Transição de 1 segundo para o fade */
+        }
+        .carousel-image.active, .room-image.active {
+            opacity: 1;
+        }
+
+        /* NOVO EFEITO: GLOW nas Imagens da Sala do Cliente e Certificados */
+        .room-image-glow, .certs-glow {
+            box-shadow: 0 0 30px rgba(255, 75, 75, 0.4); /* Sombra mais forte no tom vermelho */
+        }
+
+        /* Estilo para inputs no tema escuro */
+        .form-input {
+            background-color: #1a1a20;
+            border: 1px solid #3f3f46; /* zinc-700 */
+            color: #ffffff;
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            width: 100%;
+            transition: border-color 0.3s;
+        }
+        .form-input:focus {
+            border-color: #ff4b4b; /* accent-red on focus */
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 75, 75, 0.3);
+        }
+        
+        /* -------------------------------------- */
+    </style>
+</head>
+<body class="text-white min-h-screen antialiased">
+
+    <!-- Navbar: PRETA SÓLIDA E LOGO CENTRALIZADO -->
+    <nav class="py-4 border-b border-zinc-800 bg-black sticky top-0 z-20">
+        <div class="max-w-7xl mx-auto flex justify-center items-center">
+            <img src="https://i.imgur.com/1H059lV.jpeg" alt="Logotipo da Toyocar - Oficina Especializada" class="h-12 sm:h-16 object-contain">
+        </div>
+    </nav>
+
+    <!-- Seção de Banner de Alto Impacto (CARROSSEL ROTATIVO - BANNERS) -->
+    <section class="w-full overflow-hidden mb-0 relative pt-3"> 
+        <div id="image-carousel" class="relative w-full h-48 md:h-64">
+            <!-- Imagem 1 (ativa) -->
+            <img 
+                src="https://i.imgur.com/JF9wSl4.jpeg" 
+                alt="Equipe da Toyocar reunida, representando qualidade e serviço." 
+                class="carousel-image absolute top-0 left-0 w-full h-full object-cover rounded-xl shadow-2xl active" 
+                style="box-shadow: 0 0 50px rgba(255, 75, 75, 0.5);"
+            >
+             <!-- Imagem 2 -->
+             <img 
+                src="https://i.imgur.com/YtaFRzs.jpeg" 
+                alt="Fachada moderna da Toyocar, mostrando estrutura profissional." 
+                class="carousel-image absolute top-0 left-0 w-full h-full object-cover rounded-xl shadow-2xl" 
+                style="box-shadow: 0 0 50px rgba(255, 75, 75, 0.5);"
+            >
+             <!-- Imagem 3 -->
+             <img 
+                src="https://i.imgur.com/1tdn0Gf.jpeg" 
+                alt="Carro de alto desempenho sendo revisado na oficina Toyocar." 
+                class="carousel-image absolute top-0 left-0 w-full h-full object-cover rounded-xl shadow-2xl" 
+                style="box-shadow: 0 0 50px rgba(255, 75, 75, 0.5);"
+            >
+        </div>
+    </section>
+
+    <!-- SEÇÃO 1: INÍCIO (HERO) - Conteúdo Especializado -->
+    <header class="pt-10 lg:pt-16 pb-16 text-center px-4"> 
+        <div class="max-w-5xl mx-auto">
+            <!-- CORRIGIDO: Voltando para o slogan principal -->
+            <p class="text-lg font-semibold uppercase tracking-widest text-accent-red mb-3 animate-pulse">A CASA DO SEU TOYOTA EM FORTALEZA</p>
+            <!-- Título Principal -->
+            <h1 class="text-5xl sm:text-7xl font-extrabold mb-6 leading-tight">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent-red to-accent-dark-red">Oficina Especializada</span> do seu Toyota em Fortaleza.
+            </h1>
+            <p class="text-xl sm:text-2xl text-zinc-300 mb-10 max-w-3xl mx-auto">
+                Serviço de alta performance, diagnóstico preciso e cuidado exclusivo para seu Hilux, Corolla, SW4 e toda a linha Toyota.
+            </p>
+            
+            <!-- Botão do cabeçalho agora é um link para rolar até o formulário -->
+            <a href="#agendamento-form" class="inline-block gradient-button text-black font-extrabold py-5 px-16 rounded-full text-xl uppercase shadow-2xl">
+                Agendar Revisão pelo WhatsApp
+            </a>
+            
+            <!-- PROVA SOCIAL DE GOOGLE - Estrelas em AMARELO DOURADO -->
+            <div class="mt-8 flex justify-center items-center space-x-3">
+                <span class="text-3xl" style="color: #FFC107;">★★★★★</span>
+                <p class="text-xl text-zinc-300 font-bold">4.9/5.0</p>
+                <p class="text-lg text-zinc-400 font-semibold">(662 Avaliações no Google)</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- BLOCO "POR QUE ESCOLHER A TOYOCAR?" (Diferenciais) -->
+    <section id="diferenciais" class="py-16 px-4 bg-primary-dark/80 border-t border-b border-zinc-800">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-extrabold text-center mb-14 tracking-tight">Nível Concessionária, Cuidado Exclusivo</h2>
+
+            <div class="grid md:grid-cols-4 gap-8">
+                <!-- Diferencial 1: Especialização Exclusiva -->
+                <div class="p-6 service-card shadow-xl">
+                    <svg class="w-12 h-12 mb-3 text-accent-red" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.001 12.001 0 002.944 12c.045 1.776.33 3.535.845 5.257m1.295-.459A11.97 11.97 0 0012 21a11.97 11.97 0 006.155-2.202M12 2v20"></path></svg>
+                    <h3 class="text-xl font-bold mb-2 text-accent-red">Especialização Exclusiva</h3>
+                    <p class="text-zinc-400 text-sm">Nossa equipe só respira Toyota. Conhecemos cada parafuso do seu carro, garantindo o procedimento correto.</p>
+                </div>
+
+                <!-- Diferencial 2: Equipe Treinada -->
+                <div class="p-6 service-card shadow-xl">
+                    <svg class="w-12 h-12 mb-3 text-accent-red" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20v-2m0 2H7m10-2v-2c0-.656-.126-1.283-.356-1.857M7 14v-2m-2 4h10v2H7m-2-4h10v-2H5m11-2H9m7 0a3 3 0 10-6 0m6 0v-2h-6v2m6 0h-6"></path></svg>
+                    <h3 class="text-xl font-bold mb-2 text-accent-red">Técnicos Certificados</h3>
+                    <p class="text-zinc-400 text-sm">Nossos técnicos estão em constante atualização nas plataformas da marca para atender sua Hilux ou Corolla.</p>
+                </div>
+
+                <!-- Diferencial 3: Diagnóstico de Ponta -->
+                <div class="p-6 service-card shadow-xl">
+                    <svg class="w-12 h-12 mb-3 text-accent-red" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1h-.75M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    <h3 class="text-xl font-bold mb-2 text-accent-red">Tecnologia e Precisão</h3>
+                    <p class="text-zinc-400 text-sm">Usamos equipamentos modernos para um diagnóstico rápido e o mais preciso do mercado.</p>
+                </div>
+
+                <!-- Diferencial 4: Transparência Total -->
+                <div class="p-6 service-card shadow-xl">
+                    <svg class="w-12 h-12 mb-3 text-accent-red" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c1.657 0 3 .895 3 2s-1.343 2-3 2-3 .895-3 2 1.343 2 3 2m0-8V6m0 4v2m0 2v2"></path></svg>
+                    <h3 class="text-xl font-bold mb-2 text-accent-red">Transparência Absoluta</h3>
+                    <p class="text-zinc-400 text-sm">Manutenção é investimento. Aqui você acompanha e sabe exatamente o que está sendo feito, sem surpresas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 3: NOSSOS SERVIÇOS (Detalhada) -->
+    <section id="servicos-detalhados" class="py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-extrabold text-center mb-4 tracking-tight">Serviços de Alta Performance para seu Toyota</h2>
+            <p class="text-xl text-zinc-400 text-center mb-14 max-w-3xl mx-auto">Procedimentos exclusivos que mantêm a performance, segurança e a garantia de fábrica do seu veículo.</p>
+
+            <div class="grid md:grid-cols-2 gap-x-12 gap-y-10">
+                <!-- Serviço 1: Revisão Periódica Completa -->
+                <div class="p-6 bg-zinc-900 rounded-xl shadow-xl border-l-4 border-accent-red">
+                    <h3 class="text-2xl font-bold text-accent-red mb-2">Revisão Periódica Completa</h3>
+                    <p class="text-zinc-400">O check-up completo que seu Toyota merece. Seguimos os mais altos padrões e o cronograma do fabricante. Não é apenas uma inspeção, é a garantia de que seu carro continuará sendo um Toyota.</p>
+                </div>
+
+                <!-- Serviço 2: Troca de Óleo de Motor e Câmbio -->
+                <div class="p-6 bg-zinc-900 rounded-xl shadow-xl border-l-4 border-accent-red">
+                    <h3 class="text-2xl font-bold text-accent-red mb-2">Troca de Óleo de Motor e Câmbio</h3>
+                    <p class="text-zinc-400">Serviço especializado de troca de fluidos, incluindo o complexo **câmbio automático** da linha Toyota. Utilizamos apenas as melhores marcas do mercado, como **Motul**, para performance e proteção máxima.</p>
+                </div>
+
+                <!-- Serviço 3: Manutenção de Freios e Suspensão -->
+                <div class="p-6 bg-zinc-900 rounded-xl shadow-xl border-l-4 border-accent-red">
+                    <h3 class="text-2xl font-bold text-accent-red mb-2">Manutenção de Freios e Suspensão</h3>
+                    <p class="text-zinc-400">Sua segurança em primeiro lugar. Diagnóstico completo e troca de componentes críticos como pastilhas, discos, pivôs e amortecedores, sempre com foco no peso e na dinâmica de condução do seu Toyota.</p>
+                </div>
+
+                <!-- Serviço 4: Diagnóstico de Arrefecimento -->
+                <div class="p-6 bg-zinc-900 rounded-xl shadow-xl border-l-4 border-accent-red">
+                    <h3 class="text-2xl font-bold text-accent-red mb-2">Diagnóstico de Arrefecimento</h3>
+                    <p class="text-zinc-400">A saúde do motor depende da temperatura. Somos especialistas em identificar vazamentos, realizar a troca de bomba d'água e manter o sistema de arrefecimento operando com eficiência máxima, vital para Fortaleza.</p>
+                </div>
+
+                <!-- Serviço 5: Diagnóstico de Motor e Injeção -->
+                <div class="p-6 bg-zinc-900 rounded-xl shadow-xl border-l-4 border-accent-red">
+                    <h3 class="text-2xl font-bold text-accent-red mb-2">Diagnóstico de Motor e Injeção</h3>
+                    <p class="text-zinc-400">Com nossos equipamentos de última geração, encontramos e resolvemos qualquer falha de motor ou injeção eletrônica de forma rápida, precisa e sem *tentativas*.</p>
+                </div>
+
+                <!-- Serviço 6: Troca de Filtros Especializados -->
+                <div class="p-6 bg-zinc-900 rounded-xl shadow-xl border-l-4 border-accent-red">
+                    <h3 class="text-2xl font-bold text-accent-red mb-2">Filtros (Especial: Filtro Pressurizado)</h3>
+                    <p class="text-zinc-400">Troca de todos os filtros com foco no **filtro pressurizado**, crucial para o desempenho e a saúde do motor, garantindo que apenas ar limpo e na pressão correta chegue ao sistema.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NOVO: SEÇÃO DE COMO CHEGAR (WAZE E MAPS) -->
+    <section id="como-chegar" class="py-16 px-4 bg-primary-dark/80 border-t border-b border-zinc-800">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-4xl font-extrabold mb-4 tracking-tight">Como Chegar na <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent-red to-accent-dark-red">Toyocar</span></h2>
+            <p class="text-xl text-zinc-300 mb-8 max-w-3xl mx-auto">Estamos localizados no bairro Barroso, em Fortaleza. Clique no seu aplicativo de preferência e inicie a navegação com um toque!</p>
+
+            <p class="text-lg font-bold text-zinc-300 mb-6">
+                Rua Maximiano Barreto, 910 - Barroso | Fortaleza/CE
+            </p>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-6 max-w-xl mx-auto">
+                <!-- Endereço Codificado para Navegação -->
+                
+                <!-- Botão WAZE -->
+                <a 
+                    href="https://waze.com/ul?q=Rua%20Maximiano%20Barreto%2C%20910%2C%20Fortaleza%2C%20CE" 
+                    target="_blank" 
+                    class="flex items-center justify-center space-x-2 py-4 px-8 rounded-full font-extrabold text-xl transition-transform hover:scale-105"
+                    style="background-color: #33ccff; color: #000000; box-shadow: 0 0 20px rgba(51, 204, 255, 0.5);"
+                >
+                    <!-- Ícone WAZE (simulado com SVG) -->
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-12a1 1 0 112 0v5a1 1 0 11-2 0V6zm3 10a1 1 0 01-2 0v-2a1 1 0 112 0v2z" clip-rule="evenodd"></path></svg>
+                    <span>Abrir no Waze</span>
+                </a>
+
+                <!-- Botão GOOGLE MAPS -->
+                <a 
+                    href="https://www.google.com/maps/dir/?api=1&destination=Rua%20Maximiano%20Barreto%2C%20910%2C%20Fortaleza%2C%20CE" 
+                    target="_blank" 
+                    class="flex items-center justify-center space-x-2 py-4 px-8 rounded-full font-extrabold text-xl transition-transform gradient-button text-black"
+                >
+                    <!-- Ícone MAPS (simulado com SVG) -->
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>
+                    <span>Abrir no Maps</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- SEÇÃO 2: SOBRE NÓS (Filosofia da Marca e Sala do Cliente) -->
+    <section id="sobre-nos" class="py-16 px-4 border-b border-zinc-800">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-8 items-center">
+            <!-- Coluna 1: Carrossel da Sala do Cliente -->
+            <div class="relative">
+                <!-- TÍTULO ACIMA DO CARROSSEL -->
+                <p class="text-2xl font-bold text-accent-red mb-4 mt-2 text-center md:text-left">Sala do Cliente Climatizada</p>
+                <div id="customer-room-carousel" class="relative rounded-xl overflow-hidden shadow-2xl border border-zinc-700 h-64 md:h-80 w-full">
+                    <!-- Imagem 1 (ativa) -->
+                    <img 
+                        src="https://i.imgur.com/QzMpEbJ.jpeg" 
+                        alt="Sala de espera climatizada e confortável da Toyocar." 
+                        class="room-image absolute top-0 left-0 w-full h-full object-cover active room-image-glow"
+                    >
+                     <!-- Imagem 2 -->
+                     <img 
+                        src="https://i.imgur.com/x7Ivcsx.jpeg" 
+                        alt="Mimos e ambiente de alto padrão na sala de espera da Toyocar." 
+                        class="room-image absolute top-0 left-0 w-full h-full object-cover room-image-glow"
+                    >
+                </div>
+                
+                <!-- PROVA DE AUTORIDADE: CERTIFICADOS -->
+                <div class="mt-8 text-center md:text-left">
+                    <p class="text-xl font-bold text-accent-dark-red mb-3">Comprometimento com a Excelência</p>
+                    <p class="text-lg text-zinc-400 mb-4">A excelência da Toyocar é comprovada pelo investimento constante em qualificação. Nossa equipe está sempre atualizada para manter o nível máximo em todos os serviços do seu Toyota.</p>
+                    <img 
+                        src="https://i.imgur.com/BRNBuhp.jpeg" 
+                        alt="Certificados de treinamento e qualificação da equipe Toyocar." 
+                        class="w-full h-auto object-contain rounded-lg border border-zinc-700 mx-auto md:mx-0 certs-glow"
+                    >
+                </div>
+            </div>
+
+            <!-- Coluna 2: Texto Sobre Nós Atualizado -->
+            <div>
+                <h2 class="text-4xl font-extrabold mb-6">Nossa Paixão é a Mesma que a Sua: <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent-red to-accent-dark-red">Toyota.</span></h2>
+                <p class="text-xl text-zinc-300 mb-8">A Toyocar nasceu da decisão de ser a melhor. Focamos 100% na marca Toyota para dominar cada detalhe técnico e oferecer um serviço que eleva o padrão de atendimento em Fortaleza.</p>
+                
+                <h3 class="text-3xl font-bold mb-4 text-accent-red">Por Que Somos Diferentes?</h3>
+                <ul class="space-y-4">
+                    <li class="flex items-start">
+                        <svg class="w-6 h-6 mr-3 mt-1 text-accent-dark-red flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9 6a3 3 0 10-2.83 4h5.66A3 3 0 109 6zm-5.462 7.558a1 1 0 00-.738.007L1 14.5a.5.5 0 000 1l2.5-.25a.5.5 0 00.493-.067l.11-.082a1 1 0 00.772-1.724l-.11-.082a1 1 0 00-.772-.119zM16.462 13.558a1 1 0 01.738.007L19 14.5a.5.5 0 010 1l-2.5-.25a.5.5 0 01-.493-.067l-.11-.082a1 1 0 01-.772-1.724l.11-.082a1 1 0 01.772-.119z"></path></svg>
+                        <p class="text-lg text-zinc-400"><strong>Especialização Máxima:</strong> Foco exclusivo em Toyota para conhecimento técnico insuperável.</p>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-6 h-6 mr-3 mt-1 text-accent-dark-red flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.523 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path></svg>
+                        <p class="text-lg text-zinc-400"><strong>Transparência em Tempo Real:</strong> Você acompanha o serviço e tem o laudo completo do diagnóstico.</p>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-6 h-6 mr-3 mt-1 text-accent-dark-red flex-shrink-0" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c1.657 0 3 .895 3 2s-1.343 2-3 2-3 .895-3 2 1.343 2 3 2m0-8V6m0 4v2m0 2v2"></path></svg>
+                        <p class="text-lg text-zinc-400"><strong>Padrão de Concessionária:</strong> Procedimentos, equipamentos e peças Motul/Wurth para manter o padrão de fábrica.</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 4: AGENDAMENTO (CONTATO com Formulário Simulado) -->
+    <section id="agendamento-form" class="py-20 px-4">
+        <div class="max-w-4xl mx-auto text-center p-10 rounded-3xl border-2 border-accent-red bg-zinc-900 shadow-2xl shadow-accent-red/30">
+            <h2 class="text-4xl sm:text-5xl font-extrabold mb-3">Agende seu Horário e Receba Atendimento Exclusivo</h2>
+            
+            <!-- Destaque visual da frase "somente com agendamento" -->
+            <p class="text-xl text-zinc-300 mb-8 max-w-2xl mx-auto">
+                Trabalhamos <span class="text-accent-red font-extrabold">exclusivamente por agendamento</span> para dedicar atenção total ao seu carro, garantir pontualidade e evitar esperas. Reserve sua vaga agora!
+            </p>
+
+            <!-- Formulário Simulado de Pré-Agendamento -->
+            <div class="space-y-4">
+                <!-- Mensagem de validação (erro) -->
+                <div id="validation-message" class="text-red-500 font-bold mb-3 hidden"></div> 
+
+                <input type="text" id="client-name" placeholder="Seu Nome Completo" class="form-input" required>
+                <!-- Campo de WhatsApp com MÁSCARA -->
+                <input 
+                    type="tel" 
+                    id="client-whatsapp" 
+                    placeholder="(85) 9 xxxx-xxxx (WhatsApp)" 
+                    class="form-input" 
+                    required 
+                    maxlength="15"
+                    oninput="maskWhatsapp(event)"
+                >
+                <!-- FIM Máscara -->
+                <input type="text" id="client-car-model" placeholder="Modelo do Seu Toyota (Ex: Hilux 2020)" class="form-input" required>
+                <select id="client-service" class="form-input" required>
+                    <option value="">Selecione o Serviço Desejado</option>
+                    <option value="Revisão Periódica">Revisão Periódica</option>
+                    <option value="Troca de Óleo e Fluidos">Troca de Óleo e Fluidos</option>
+                    <option value="Freios e Suspensão">Freios e Suspensão</option>
+                    <option value="Diagnóstico de Motor/Injeção">Diagnóstico de Motor/Injeção</option>
+                    <option value="Outro Serviço">Outro Serviço (Detalhar no WhatsApp)</option>
+                </select>
+                
+                <!-- Botão que CHAMA A FUNÇÃO sendWhatsApp() -->
+                <button onclick="sendWhatsApp()" class="inline-block gradient-button w-full text-black font-extrabold py-5 px-16 rounded-xl text-2xl shadow-2xl uppercase mt-6">
+                    ENVIAR PRÉ-AGENDAMENTO (VIA WHATSAPP)
+                </button>
+            </div>
+
+            <!-- Informações de Contato e Horário -->
+            <div class="mt-10 text-zinc-400">
+                <p class="font-bold text-accent-red mb-1">Horário de Funcionamento (Segunda a Sexta)</p>
+                <p class="text-xl">07:15 às 17:30 (Atendimento exclusivo por agendamento)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé (Contato) -->
+    <footer id="contato" class="py-8 px-4 bg-primary-dark/50 border-t border-zinc-800 mt-10">
+        <div class="max-w-7xl mx-auto text-center text-zinc-500">
+            <!-- Telefone e Endereço CORRETOS -->
+            <p class="mb-2">TOYOCAR AUTO CENTER | A Casa do seu Toyota em Fortaleza | (85) 98944-3574</p>
+            <p class="text-sm">Rua Maximiano Barreto, 910 | Barroso | Fortaleza/CE | CNPJ: 00.000.000/0001-00 | Todos os direitos reservados. &copy; 2024</p>
+        </div>
+    </footer>
+
+    <!-- Script JavaScript para os Carrosséis, Máscara e WhatsApp Dinâmico -->
+    <script>
+        // --- CONFIGURAÇÕES GLOBAIS ---
+        const WHATSAPP_NUMBER = '5585989443574'; // (85) 98944-3574 no formato internacional
+        const INTERVAL_TIME = 3500; // 3.5 segundos - CONFIGURADO PARA MUDANÇA RÁPIDA
+
+        // Função dummy para startCountdown (mantido apenas para não quebrar a lógica anterior)
+        function startCountdown() {}
+
+        // ----------------------------------------------------
+        // --- FUNÇÃO DE MÁSCARA DE TELEFONE ---
+        // ----------------------------------------------------
+        function maskWhatsapp(event) {
+            let input = event.target;
+            let value = input.value.replace(/\D/g, ''); // 1. Remove tudo que não for dígito
+
+            // Limita a 11 dígitos (DDD + 9 dígitos do celular)
+            if (value.length > 11) {
+                value = value.substring(0, 11);
+            }
+
+            let maskedValue = '';
+            
+            // 2. Aplica a máscara: (XX) XXXXX-XXXX
+            if (value.length > 0) {
+                maskedValue += '(' + value.substring(0, 2); // (85
+            }
+            if (value.length > 2) {
+                maskedValue += ') '; // (85) 
+            }
+            // 9 dígitos para celular brasileiro (após o DDD)
+            if (value.length > 7) { 
+                maskedValue += value.substring(2, 7) + '-' + value.substring(7); // (85) 99999-99
+            } else if (value.length > 2) {
+                maskedValue += value.substring(2); // (85) 99999
+            }
+
+            input.value = maskedValue;
+        }
+
+
+        // ----------------------------------------------------
+        // --- FUNÇÃO PRINCIPAL: ENVIAR WHATSAPP DINÂMICO ---
+        // ----------------------------------------------------
+        function sendWhatsApp() {
+            const name = document.getElementById('client-name').value.trim();
+            const whatsapp = document.getElementById('client-whatsapp').value.trim();
+            const carModel = document.getElementById('client-car-model').value.trim();
+            const service = document.getElementById('client-service').value;
+            const validationMessage = document.getElementById('validation-message');
+
+            // Limpa mensagens anteriores
+            validationMessage.classList.add('hidden');
+            validationMessage.innerHTML = '';
+            
+            // Validação
+            if (!name || !whatsapp || !carModel || !service || service === '') {
+                validationMessage.textContent = '⚠️ Por favor, preencha todos os campos para enviar o agendamento.';
+                validationMessage.classList.remove('hidden');
+                return; 
+            }
+
+            // Monta a mensagem para o WhatsApp
+            const message = `
+*Pré-Agendamento TOYOCAR:*
+
+*Nome:* ${name}
+*WhatsApp:* ${whatsapp}
+*Modelo do Toyota:* ${carModel}
+*Serviço Desejado:* ${service}
+
+*Mensagem Automática:* Olá, gostaria de confirmar este agendamento e saber qual o próximo horário disponível.
+            `.trim();
+
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+            
+            window.open(whatsappURL, '_blank');
+        }
+
+        // ----------------------------------------------------
+        // --- FUNÇÕES DOS CARROSSÉIS ---
+        // ----------------------------------------------------
+        
+        // Carrossel do Banner Principal
+        function startImageCarousel() {
+            const images = document.querySelectorAll('#image-carousel .carousel-image');
+            if (images.length === 0) return; 
+            
+            let currentIndex = 0;
+
+            function nextImage() {
+                images.forEach(img => img.classList.remove('active'));
+                currentIndex = (currentIndex + 1) % images.length;
+                if (images[currentIndex]) {
+                    images[currentIndex].classList.add('active');
+                }
+            }
+            setInterval(nextImage, INTERVAL_TIME);
+        }
+
+        // Carrossel da Sala do Cliente
+        function startCustomerRoomCarousel() {
+            const images = document.querySelectorAll('#customer-room-carousel .room-image');
+            if (images.length === 0) return; 
+            
+            let currentIndex = 0;
+
+            function nextImage() {
+                images.forEach(img => img.classList.remove('active'));
+                currentIndex = (currentIndex + 1) % images.length;
+                if (images[currentIndex]) {
+                    images[currentIndex].classList.add('active');
+                }
+            }
+            setInterval(nextImage, INTERVAL_TIME);
+        }
+
+        // Inicia ambos os carrosséis quando a página carregar
+        window.onload = function() {
+            startCountdown();
+            startImageCarousel();
+            startCustomerRoomCarousel();
+        };
+    </script>
+</body>
+</html>
